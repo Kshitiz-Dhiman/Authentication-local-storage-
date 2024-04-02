@@ -51,5 +51,7 @@ btn2.addEventListener("click", () => {
   } else {
     alert("Login failed");
   }
+  signEmail.value = "";
+  signPassword.value = "";
 });
 

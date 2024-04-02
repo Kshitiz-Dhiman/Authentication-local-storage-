@@ -4,20 +4,13 @@ let btn = document.querySelector("#button");
 let signEmail = document.querySelector("#email2");
 let signPassword = document.querySelector("#password2");
 let btn2 = document.querySelector("#button2");
-let users = [
-  {
-    email: "kshitiz",
-    password: "kshitiz",
-  },
-];
+
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
 let char =
   " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
 let key =
-  " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
-key = key
-  .split("")
-  .sort(() => Math.random() - 0.5)
-  .join("");
+  " lhsuEtfgprimnoaywxBCDGJKLNOPQRTVWXYZ0235678941#%$&'()*+,-./:;<=>?@[]^_`{|}~";
 let charArray = char.split("");
 let keyArray = key.split("");
 
@@ -35,6 +28,7 @@ btn.addEventListener("click", () => {
     email: emailValue.value,
     password: encryptedPassword,
   });
+  localStorage.setItem("users", JSON.stringify(users));
   console.log(users);
   emailValue.value = "";
   passwordValue.value = "";
@@ -43,18 +37,19 @@ btn.addEventListener("click", () => {
 
 btn2.addEventListener("click", () => {
   let cypherText = "";
-  let encrypt = (text) => {
+  let decrypt = (text) => {
     for (const letter of text) {
       let index = char.indexOf(letter);
       cypherText += key[index];
     }
     return cypherText;
   };
-  let encryptedPassword = encrypt(signPassword.value);
+  let encryptedPassword = decrypt(signPassword.value);
   let user = users.find((user) => user.email === signEmail.value);
   if (user.password === encryptedPassword) {
-    alert("Login successful")
+    alert("Login successful");
   } else {
-    alert("Login failed")
+    alert("Login failed");
   }
 });
+
